@@ -8,6 +8,7 @@ import Profile from "./Pages/Profile";
 import Welcome from "./Pages/Welcome";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import ItemDetails from "./Pages/ItemDetails";
 
 const stack = createStackNavigator();
 
@@ -46,14 +47,17 @@ const BasicHomeScreen = () => {
 
 const App = () => {
   return (
-<NavigationContainer>
-      <stack.Navigator initialRouteName="Welcome"
+    <NavigationContainer>
+      <stack.Navigator
+        initialRouteName="Welcome"
         screenOptions={{
           headerShown: false,
-        }}>        
+        }}
+      >
         <stack.Screen name="Welcome" component={Welcome} />
         <stack.Screen name="Login" component={Login} />
         <stack.Screen name="Sign Up" component={Signup} />
+        <stack.Screen name="Details" component={ItemDetails} />
         <stack.Screen name="Home" component={BasicHomeScreen} />
       </stack.Navigator>
     </NavigationContainer>
