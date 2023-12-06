@@ -1,7 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "./Pages/Home";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import Home from "./Pages/Home";
+import AddItem from "./Pages/AddItem";
+import Profile from "./Pages/Profile";
+import Welcome from "./Pages/Welcome";
 
 const stack = createStackNavigator();
 
@@ -9,28 +13,44 @@ const bottomTab = createBottomTabNavigator();
 
 const BasicDashboardScreen = () => {
   return (
-    <stack.Navigator
-      screenOptions={{
+    <bottomTab.Navigator
+      screenOptions={({ route }) => ({
         headerShown: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Add Item") {
+            iconName = focused ? "add-circle" : "add-circle-outline";
+          } else if (route.name === "Profile") {
+            iconName = focused ? "person" : "person-outline";
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarStyle: { backgroundColor: "#00FFE9" },
+      })}
+      tabBarOptions={{
+        activeTintColor: "#444AC4",
+        inactiveTintColor: "#444AC4",
       }}
     >
-      <stack.Screen name="Home Page" component={Home} />
-    </stack.Navigator>
+      <bottomTab.Screen name="Home" component={Home} />
+      <bottomTab.Screen name="Add Item" component={AddItem} />
+      <bottomTab.Screen name="Profile" component={Profile} />
+    </bottomTab.Navigator>
   );
 };
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <bottomTab.Navigator
+<NavigationContainer>
+      <stack.Navigator initialRouteName="Welcome"
         screenOptions={{
           headerShown: false,
-        }}
-      >
-        <bottomTab.Screen name="Dashboard" component={BasicDashboardScreen} />
-        <bottomTab.Screen name="Add Item" component={BasicDashboardScreen} />
-        <bottomTab.Screen name="Profile" component={BasicDashboardScreen} />
-      </bottomTab.Navigator>
+        }}>        
+        <stack.Screen name="Welcome" component={Welcome} />
+      </stack.Navigator>
     </NavigationContainer>
   );
 };
