@@ -7,6 +7,7 @@ import AddItem from "./Pages/AddItem";
 import Profile from "./Pages/Profile";
 import Welcome from "./Pages/Welcome";
 import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
 
 const stack = createStackNavigator();
 
@@ -52,6 +53,7 @@ const App = () => {
         }}>        
         <stack.Screen name="Welcome" component={Welcome} />
         <stack.Screen name="Login" component={Login} />
+        <stack.Screen name="Sign Up" component={Signup} />
       </stack.Navigator>
     </NavigationContainer>
   );
