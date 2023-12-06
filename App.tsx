@@ -13,7 +13,7 @@ const stack = createStackNavigator();
 
 const bottomTab = createBottomTabNavigator();
 
-const BasicDashboardScreen = () => {
+const BasicHomeScreen = () => {
   return (
     <bottomTab.Navigator
       screenOptions={({ route }) => ({
@@ -21,7 +21,7 @@ const BasicDashboardScreen = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Home") {
+          if (route.name === "All Items") {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Add Item") {
             iconName = focused ? "add-circle" : "add-circle-outline";
@@ -37,7 +37,7 @@ const BasicDashboardScreen = () => {
         inactiveTintColor: "#444AC4",
       }}
     >
-      <bottomTab.Screen name="Home" component={Home} />
+      <bottomTab.Screen name="All Items" component={Home} />
       <bottomTab.Screen name="Add Item" component={AddItem} />
       <bottomTab.Screen name="Profile" component={Profile} />
     </bottomTab.Navigator>
@@ -54,6 +54,7 @@ const App = () => {
         <stack.Screen name="Welcome" component={Welcome} />
         <stack.Screen name="Login" component={Login} />
         <stack.Screen name="Sign Up" component={Signup} />
+        <stack.Screen name="Home" component={BasicHomeScreen} />
       </stack.Navigator>
     </NavigationContainer>
   );
