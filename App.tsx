@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from "@react-navigation/stack";
+import Home from "./Pages/Home";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
 
-export default function App() {
+const stack = createStackNavigator();
+
+const bottomTab = createBottomTabNavigator();
+
+const BasicDashboardScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <stack.Screen name="Home Page" component={Home} />
+    </stack.Navigator>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => {
+  return (
+    <NavigationContainer>
+      <bottomTab.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <bottomTab.Screen name="Dashboard" component={BasicDashboardScreen} />
+        <bottomTab.Screen name="Add Item" component={BasicDashboardScreen} />
+        <bottomTab.Screen name="Profile" component={BasicDashboardScreen} />
+      </bottomTab.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
