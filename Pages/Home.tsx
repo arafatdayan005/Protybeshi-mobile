@@ -1,8 +1,24 @@
 import { View, Text, Image, TextInput, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ItemCards from "../Components/ItemCards";
+import axios from "axios";
 
 const Home = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://192.168.0.106:3000/items');
+      setData(response.data)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   return (
     <ScrollView>
       <View className="w-full flex items-center bg-[#F6FFFB] h-full">
@@ -14,12 +30,9 @@ const Home = () => {
           placeholder="Search Item"
         />
         <View className="mt-4 px-2 flex justify-center flex-row flex-wrap">
-          <ItemCards></ItemCards>
-          <ItemCards></ItemCards>
-          <ItemCards></ItemCards>
-          <ItemCards></ItemCards>
-          <ItemCards></ItemCards>
-          <ItemCards></ItemCards>
+          {
+            data.map((item : object) => <ItemCards key={item._id} item={item} />)
+          }          
         </View>
       </View>
     </ScrollView>
