@@ -1,6 +1,8 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setUserEmail } from "../config/config";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -14,6 +16,8 @@ const Login = ({ navigation }) => {
 
       if (user) {
         if (user.password === password) {
+          await AsyncStorage.setItem('userEmail', user.email);
+          //setUserEmail(user.email)
           navigation.navigate('Home');
         } else {
           setLoginError('Incorrect password');
