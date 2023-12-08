@@ -1,5 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
+import axios from "axios";
 
 const Signup = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -7,14 +8,22 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const handleSignup = () => {
-    navigation.navigate("Home");
+    const userData = {
+      name: username,
+      email: email,
+      password: password
+    };
+
+    console.log(userData)
+
+    axios.post("http://192.168.0.106:3000/users", userData).then(() => {
+      navigation.navigate("Home");
+    });
   };
   return (
     <>
       <View className="w-full flex justify-center items-center bg-[#F6FFFB] bg-opacity-20 h-full">
-        <Text className="text-cyan-500 text-3xl font-bold mb-12">
-          Register
-        </Text>
+        <Text className="text-cyan-500 text-3xl font-bold mb-12">Register</Text>
         <View>
           <Text className="text-xl pl-2 mb-2">Name</Text>
           <TextInput
@@ -43,8 +52,6 @@ const Signup = ({ navigation }) => {
             className="border border-gray-300 h-12 w-72 rounded-full pl-4 bg-white"
             placeholder="********"
             secureTextEntry
-            value={password}
-            onChangeText={(text) => setPassword(text)}
           />
         </View>
         <TouchableOpacity

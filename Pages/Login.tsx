@@ -1,12 +1,30 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
+import axios from "axios";
 
 const Login = ({ navigation }) => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState('');
 
-  const handleLogin = () => {
-    navigation.navigate("Home");
+  const handleLogin = async () => {
+    try {
+      const response = await axios.get('http://192.168.0.106:3000/users');
+      const user = response.data.find((user) => user.email === email);
+
+      if (user) {
+        if (user.password === password) {
+          navigation.navigate('Home');
+        } else {
+          setLoginError('Incorrect password');
+        }
+      } else {
+        setLoginError('User not found');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoginError('Failed to fetch user data');
+    }
   };
 
   return (
@@ -17,8 +35,8 @@ const Login = ({ navigation }) => {
         <TextInput
           className="border border-gray-300 h-12 w-72 rounded-full pl-4 mb-4 bg-white"
           placeholder="john.doe@gmail.com"
-          value={username}
-          onChangeText={(text) => setUsername(text)}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
         />
         <Text className="text-xl pl-2 mb-2">Password</Text>
         <TextInput
@@ -29,6 +47,11 @@ const Login = ({ navigation }) => {
           onChangeText={(text) => setPassword(text)}
         />
       </View>
+      {
+        loginError &&  <Text className="font-bold text-center mt-3 text-md text-red-500">
+        {loginError}
+      </Text>
+      }
       <TouchableOpacity
         className="bg-cyan-500 w-72 py-3 rounded-full mt-4"
         onPress={handleLogin}
