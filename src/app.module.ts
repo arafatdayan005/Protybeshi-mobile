@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ItemsModule } from './items/items.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       'mongodb+srv://admin:admin123@cluster0.ltwq8j4.mongodb.net/MAD?retryWrites=true&w=majority',
     ),
     ItemsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
