@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AddItem = () => {
   const [name, setName] = useState("");
@@ -14,6 +15,22 @@ const AddItem = () => {
   const [safetyMoney, setSafetyMoney] = useState("");
   const [image, setImage] = useState("");
   const [contact, setContact] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        const userEmail = await AsyncStorage.getItem("userEmail");
+        if (userEmail !== null) {
+          setEmail(userEmail);
+        }
+      } catch (error) {
+        console.error("Error fetching user email:", error);
+      }
+    };
+
+    fetchUserEmail();
+  }, []);
 
   const handlePost = () => {
     const itemData = {
@@ -22,6 +39,7 @@ const AddItem = () => {
       safetyMoney: parseFloat(safetyMoney),
       img: image,
       contact: parseInt(contact),
+      email: email,
     };
 
     axios.post("http://192.168.0.106:3000/items", itemData).then(() => {

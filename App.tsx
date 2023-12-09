@@ -32,11 +32,9 @@ const BasicHomeScreen = () => {
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarStyle: { backgroundColor: "#00FFE9" },
+        tabBarActiveTintColor: "#444AC4",
+        tabBarInactiveTintColor: "#444AC4",
       })}
-      tabBarOptions={{
-        activeTintColor: "#444AC4",
-        inactiveTintColor: "#444AC4",
-      }}
     >
       <bottomTab.Screen name="All Items" component={Home} />
       <bottomTab.Screen name="Add Item" component={AddItem} />
